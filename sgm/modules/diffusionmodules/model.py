@@ -720,6 +720,8 @@ class Decoder(nn.Module):
         temb = None
 
         # z to block_in
+        z = z.half()
+        self.conv_in.to(dtype=z.dtype)
         h = self.conv_in(z)
 
         # middle

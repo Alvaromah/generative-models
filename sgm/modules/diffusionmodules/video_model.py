@@ -453,12 +453,12 @@ class VideoUNet(nn.Module):
             self.num_classes is not None
         ), "must specify y if and only if the model is class-conditional -> no, relax this TODO"
         hs = []
-        t_emb = timestep_embedding(timesteps, self.model_channels, repeat_only=False)
+        t_emb = timestep_embedding(timesteps, self.model_channels, repeat_only=False).half()
         emb = self.time_embed(t_emb)
 
         if self.num_classes is not None:
             assert y.shape[0] == x.shape[0]
-            emb = emb + self.label_emb(y)
+            emb = emb + self.label_emb(y.half())
 
         h = x
         for module in self.input_blocks:

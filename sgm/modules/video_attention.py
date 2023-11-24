@@ -272,6 +272,9 @@ class SpatialVideoTransformer(SpatialTransformer):
             repeat_only=False,
             max_period=self.max_time_embed_period,
         )
+        # Enable mixed precision if x is float16
+        t_emb = t_emb.to(dtype=x.dtype)
+
         emb = self.time_pos_embed(t_emb)
         emb = emb[:, None, :]
 
